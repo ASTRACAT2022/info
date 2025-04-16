@@ -357,7 +357,7 @@
                 transform: translate(0, 0);
             }
             50% {
-                transform: translate(25%, 25%);
+                transform: translate(25%, 25%); 
             }
             100% {
                 transform: translate(-25%, -25%);
@@ -527,8 +527,7 @@
         .feature-card h3 {
             font-size: 24px;
             margin-bottom: 15px;
-            color: var(--light);
-}
+            color: var(--light); }
 
         .feature-card p {
             color: var(--gray);
@@ -591,6 +590,7 @@
         .project-card:nth-child(1) { animation-delay: 0.3s; }
         .project-card:nth-child(2) { animation-delay: 0.6s; }
         .project-card:nth-child(3) { animation-delay: 0.9s; }
+        .project-card:nth-child(4) { animation-delay: 1.2s; }
 
         .project-card:hover {
             transform: translateY(-10px);
@@ -866,10 +866,10 @@
             
             <!-- Cloudflare Turnstile -->
             <div class="cf-turnstile" 
-                 data-sitekey="0x4AAAAAABLgaFLEZGcqAM3Q"
-                 data-callback="onCaptchaSuccess"
-                 data-theme="dark"
-                 data-language="ru"></div>
+                  data-sitekey="0x4AAAAAABLgaFLEZGcqAM3Q" 
+                  data-callback="onCaptchaSuccess" 
+                  data-theme="dark" 
+                  data-language="ru"></div>
         </div>
     </div>
 
@@ -908,6 +908,7 @@
             <div class="hero-buttons">
                 <a href="https://astracat2022.github.io/vpngen/" class="btn">VPN ГЕНЕРАТОР</a>
                 <a href="https://astracat2022.github.io/dns" class="btn btn-secondary">ASTRACAT DNS</a>
+                <a href="https://astracat2022.github.io/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
             </div>
         </div>
     </section>
@@ -1001,6 +1002,16 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>WARP Generator</h3>
+                        <p>Генератор конфигураций Cloudflare WARP для максимальной скорости и безопасности соединения.</p>
+                        <a href="https://astracat2022.github.io/warp" class="btn">ПОДРОБНЕЕ</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
                         <i class="fab fa-github"></i>
                     </div>
                     <div class="project-content">
@@ -1021,6 +1032,7 @@
             <div class="hero-buttons">
                 <a href="https://astracat2022.github.io/vpngen/" class="btn">НАЧАТЬ С VPN</a>
                 <a href="https://astracat2022.github.io/dns" class="btn btn-secondary">НАСТРОИТЬ DNS</a>
+                <a href="https://astracat2022.github.io/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
             </div>
         </div>
     </section>
@@ -1043,6 +1055,7 @@
                     <ul class="footer-links">
                         <li><a href="https://astracat2022.github.io/dns">ASTRACAT DNS</a></li>
                         <li><a href="https://astracat2022.github.io/vpngen/">VPN GEn</a></li>
+                        <li><a href="https://astracat2022.github.io/warp">WARP Generator</a></li>
                         <li><a href="https://github.com/ASTRACAT2022">GitHub</a></li>
                     </ul>
                 </div>
@@ -1071,18 +1084,18 @@
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
-       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-       m[i].l=1*new Date();
-       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-       ym(100530848, "init", {
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        
+        ym(100530848, "init", {
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,
             webvisor:true
-       });
+        });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/100530848" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
