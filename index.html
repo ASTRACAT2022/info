@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AstraCatWarp — Проверка браузера</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .browser-warning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      padding: 20px;
+      z-index: 1000;
+    }
+  </style>
+
+  <script>
+    // Проверка при загрузке страницы
+    window.onload = function() {
+      const isYandex = /YaBrowser|Yowser/i.test(navigator.userAgent);
+      
+      if (isYandex) {
+        document.body.innerHTML = `
+          <div class="browser-warning">
+            <div>
+              <h1>🚫 Доступ ограничен</h1>
+              <p>Используйте Chrome, Firefox, Edge или Safari</p>
+              <p><small>Yandex Browser не поддерживается</small></p>
+            </div>
+          </div>
+        `;
+      } else {
+        // Редирект для всех нормальных браузеров
+        window.location.href = "generator.html";
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <!-- Резервный контент если JavaScript отключен -->
+  <noscript>
+    <div class="browser-warning">
+      <h1>⚠️ Требуется JavaScript</h1>
+      <p>Пожалуйста, включите JavaScript для продолжения</p>
+    </div>
+  </noscript>
+</body>
+</html>
