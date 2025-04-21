@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTRACAT | Брутальная безопасность</title>
     
-    <!-- Cloudflare Turnstile -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    
     <!-- Перенаправление через мета-тег для GitHub Pages -->
     <meta http-equiv="refresh" content="0;url=https://astracat.vercel.app">
     
     <!-- Перенаправление через JavaScript для GitHub Pages -->
     <script>
         if (window.location.hostname.includes('github.io')) {
+            // Мгновенный редирект без записи в историю
             window.location.replace('https://astracat.vercel.app');
         }
     </script>
 
+    <!-- Стили и скрипты для Vercel (не загружаются на GitHub Pages) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <!-- Vercel Speed Insights -->
     <script src="https://unpkg.com/@vercel/speed-insights@1.0.12/dist/index.js" defer></script>
     <!-- Vercel Web Analytics -->
@@ -56,6 +57,40 @@
                 radial-gradient(circle at 75% 75%, rgba(0,204,255,0.1) 0%, transparent 50%);
             background-attachment: fixed;
             overflow-x: hidden;
+        }
+
+        /* Redirect Message */
+        #redirect-message {
+            text-align: center;
+            padding: 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        #redirect-message h1 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        #redirect-message p {
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+
+        #redirect-message a {
+            color: var(--secondary);
+            text-decoration: underline;
+            font-weight: 600;
         }
 
         /* Auth Container */
@@ -206,26 +241,6 @@
         @keyframes loading {
             0% { width: 0; }
             100% { width: 100%; }
-        }
-
-        /* Redirect Message */
-        #redirect-message {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        #redirect-message h1 {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-
-        #redirect-message p {
-            font-size: 1.2rem;
-        }
-
-        #redirect-message a {
-            color: var(--secondary);
-            text-decoration: underline;
         }
 
         /* Container */
@@ -1151,7 +1166,7 @@
     <script>
         // Показать сообщение о редиректе и скрыть контент для GitHub Pages
         if (window.location.hostname.includes('github.io')) {
-            document.getElementById('redirect-message').style.display = 'block';
+            document.getElementById('redirect-message').style.display = 'flex';
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('preloader').style.display = 'none';
             document.querySelector('header').style.display = 'none';
