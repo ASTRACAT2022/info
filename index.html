@@ -9,16 +9,12 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     
     <!-- Перенаправление через мета-тег для GitHub Pages -->
-    <script>
-        if (window.location.hostname.includes('github.io')) {
-            document.write('<meta http-equiv="refresh" content="0;url=https://astracat.vercel.app' + window.location.pathname + window.location.search + '">');
-        }
-    </script>
+    <meta http-equiv="refresh" content="0;url=https://astracat.vercel.app">
     
     <!-- Перенаправление через JavaScript для GitHub Pages -->
     <script>
         if (window.location.hostname.includes('github.io')) {
-            window.location.replace('https://astracat.vercel.app' + window.location.pathname + window.location.search);
+            window.location.replace('https://astracat.vercel.app');
         }
     </script>
 
