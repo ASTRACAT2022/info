@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTRACAT | Брутальная безопасность</title>
-    
-    <!-- Cloudflare Turnstile -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vercel Speed Insights -->
-    <script src="https://unpkg.com/@vercel/speed-insights@1.0.12/dist/index.js" defer></script>
-    <!-- Vercel Web Analytics -->
-    <script src="https://unpkg.com/@vercel/analytics@1.5.0/dist/index.js" defer></script>
-    <!-- Statsig SDK -->
-    <script src="https://cdn.statsig.com/statsig.min.js" defer></script>
+    <script>
+        // Redirect from old site to new site
+        if (window.location.hostname === 'astracat2022.github.io') {
+            window.location.replace('https://astracat.vercel.app');
+        }
+    </script>
     <style>
         :root {
             --primary: #1a1a1a;
@@ -877,10 +873,10 @@
             
             <!-- Cloudflare Turnstile -->
             <div class="cf-turnstile" 
-                 data-sitekey="0x4AAAAAABLgaFLEZGcqAM3Q" 
-                 data-callback="onCaptchaSuccess" 
-                 data-theme="dark" 
-                 data-language="ru"></div>
+                  data-sitekey="0x4AAAAAABLgaFLEZGcqAM3Q" 
+                  data-callback="onCaptchaSuccess" 
+                  data-theme="dark" 
+                  data-language="ru"></div>
         </div>
     </div>
 
@@ -1058,7 +1054,7 @@
                     <div class="social-links">
                         <a href="https://t.me/astracatui" title="Telegram"><i class="fab fa-telegram"></i></a>
                         <a href="https://github.com/ASTRACAT2022" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="/cdn-cgi/l/email-protection#0d6c7e797f6c6e6c793f3d3c344d6a606c6461236e6260" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="/cdn-cgi/l/email-protection#8cefdff8fceffdfafcefedeffabcbebfb7cce9e3efe7e2a0ede1e3" title="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1081,20 +1077,20 @@
                 <div class="footer-column">
                     <h3>Контакты</h3>
                     <ul class="footer-links">
-                        <li><a href="/cdn-cgi/l/email-protection#a0c1d3d4d2c1c3c1d492909199e0c7cdc1c9cc8ec3cfcd"><span class="__cf_email__" data-cfemail="b19082858390929085c3c1c0c8b1969c90989ddf929e9c">[email protected]</span></a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#3150424543505250450301000871565c50585d1f525e5c"><span class="__cf_email__" data-cfemail="eacbd9ded8cbc9cbde989a9b93eacdc7cbc3c684c9c5c7">[email&#160;protected]</span></a></li>
                         <li><a href="https://t.me/astracatui">Telegram: @astracatui</a></li>
                         <li><a href="https://github.com/ASTRACAT2022">GitHub: ASTRACAT2022</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 ASTRACAT. Все права защищены. <a href="https://github.com/ASTRACAT2022" style="color: var(--secondary); text-decoration: none;">GitHub</a></p>
+                <p>&copy; 2025 ASTRACAT. Все права защищены. <a href="https://github.com/ASTRACAT2022" style="color: var(--secondary); text-decoration: none;">GitHub</a></p>
             </div>
         </div>
     </footer>
 
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" >
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -1111,70 +1107,40 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/100530848" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <script>
         // Обработка успешной проверки капчи
         function onCaptchaSuccess(token) {
-            console.log('CAPTCHA Success, token:', token);
-            try {
-                // Скрываем окно авторизации
-                const authContainer = document.getElementById('authContainer');
-                authContainer.style.opacity = '0';
-                authContainer.style.pointerEvents = 'none';
-                
-                // Показываем прелоадер
-                const preloader = document.getElementById('preloader');
-                preloader.classList.add('active');
-                
-                // Инициализация Vercel Web Analytics
-                if (typeof window.VercelAnalytics !== 'undefined') {
-                    window.VercelAnalytics.inject();
-                    console.log('Vercel Web Analytics initialized');
-                } else {
-                    console.error('Vercel Analytics script not loaded');
-                }
-                
-                // Инициализация Statsig
-                if (typeof statsig !== 'undefined') {
-                    statsig.initializeQuickstart(
-                        'client-Q61ueM0cqTmrY4ERWsq9q9t6U6qYTP32nzGQDF0iWWe',
-                        { userID: 'anonymous_user_' + Math.random().toString(36).substring(2) } // Генерация случайного userID
-                    ).then(() => {
-                        console.log('Statsig initialized');
-                        
-                        // Проверка эксперимента
-                        const experiment = statsig.getExperiment('statsig-YPHQ0eLdYiozqDsSHzgCK');
-                        console.log('Experiment statsig-YPHQ0eLdYiozqDsSHzgCK:', experiment);
-
-                        // Загрузка конфигурации из Vercel Edge Config
-                        fetch('https://edge-config.vercel.com/ecfg_aghoimbv5yteljcccpz3mmvqa3du?token=31d549d9-2881-4c84-a42b-4c6ab0ecbff3')
-                            .then(response => response.json())
-                            .then(data => {
-                                const config = data['statsig-YPHQ0eLdYiozqDsSHzgCK'];
-                                console.log('Vercel Edge Config for statsig-YPHQ0eLdYiozqDsSHzgCK:', config);
-                                // Здесь можно использовать config для настройки UI, напиши, если нужно
-                            })
-                            .catch(error => {
-                                console.error('Error fetching Vercel Edge Config:', error);
-                            });
-                    }).catch(error => {
-                        console.error('Statsig initialization failed:', error);
-                    });
-                } else {
-                    console.error('Statsig SDK not loaded');
-                }
-                
-                // Имитация загрузки
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.classList.remove('active');
-                    // Показ основного контента
-                    document.body.style.overflow = 'auto';
-                }, 2500);
-            } catch (error) {
-                console.error('Error during CAPTCHA success handling:', error);
-            }
+            // Скрываем окно авторизации
+            document.getElementById('authContainer').style.opacity = '0';
+            document.getElementById('authContainer').style.pointerEvents = 'none';
+            
+            // Показываем прелоадер
+            document.getElementById('preloader').classList.add('active');
+            
+            // Имитация загрузки
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                document.getElementById('preloader').classList.remove('active');
+                // Показ основного контента
+                document.body.style.overflow = 'auto';
+            }, 2500);
         }
+
+        // Инициализация анимации
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+            
+            // Hide preloader when page is loaded (for main content)
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    document.getElementById('preloader').style.opacity = '0';
+                    document.getElementById('preloader').style.visibility = 'hidden';
+                }, 1000);
+            });
+        });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'933e93626dc4dd19',t:'MTc0NTI1NjI3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
