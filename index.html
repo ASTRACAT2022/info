@@ -1,58 +1,1233 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>AstraCatWarp — Проверка браузера</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .browser-warning {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0f172a;
-      color: #f8fafc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-family: 'Inter', sans-serif;
-      padding: 20px;
-      z-index: 1000;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRACAT | Брутальная безопасность</title>
+    
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
+    <!-- Перенаправление через мета-тег для GitHub Pages -->
+    <script>
+        if (window.location.hostname.includes('github.io')) {
+            document.write('<meta http-equiv="refresh" content="0;url=https://astracat.vercel.app">');
+        }
+    </script>
+    
+    <!-- Перенаправление через JavaScript для GitHub Pages -->
+    <script>
+        if (window.location.hostname.includes('github.io')) {
+            window.location.replace('https://astracat.vercel.app');
+        }
+    </script>
 
-  <script>
-    // Проверка при загрузке страницы
-    window.onload = function() {
-      const isYandex = /YaBrowser|Yowser/i.test(navigator.userAgent);
-      
-      if (isYandex) {
-        document.body.innerHTML = `
-          <div class="browser-warning">
-            <div>
-              <h1>🚫 Доступ ограничен</h1>
-              <p>Используйте Chrome, Firefox, Edge или Safari</p>
-              <p><small>Yandex Browser не поддерживается</small></p>
-            </div>
-          </div>
-        `;
-      } else {
-        // Редирект для всех нормальных браузеров
-        window.location.href = "generator.html";
-      }
-    };
-  </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vercel Speed Insights -->
+    <script src="https://unpkg.com/@vercel/speed-insights@1.0.12/dist/index.js" defer></script>
+    <!-- Vercel Web Analytics -->
+    <script src="https://unpkg.com/@vercel/analytics@1.5.0/dist/index.js" defer></script>
+    <!-- Statsig SDK -->
+    <script src="https://cdn.statsig.com/statsig.min.js" defer></script>
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --primary-dark: #0d0d0d;
+            --accent: #ff4d00;
+            --accent-dark: #e64500;
+            --secondary: #00ccff;
+            --dark: #121212;
+            --light: #e6e6e6;
+            --gray: #666666;
+            --glass: rgba(30, 30, 30, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,77,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0,204,255,0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Auth Container */
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, 
+                rgba(255,77,0,0.1) 0%, 
+                rgba(18,18,18,0.95) 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .auth-box {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(255, 77, 0, 0.3);
+            box-shadow: 0 0 40px rgba(255, 77, 0, 0.2);
+            transform: scale(0.9);
+            opacity: 0;
+            animation: authEntrance 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes authEntrance {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .auth-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .auth-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .auth-subtitle {
+            color: var(--light);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Cloudflare Turnstile */
+        .cf-turnstile {
+            margin: 25px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Scan line animation */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent) 50%, 
+                transparent 100%);
+            animation: scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0% { top: -3px; }
+            100% { top: 100%; }
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            flex-direction: column;
+        }
+
+        .preloader.active {
+            display: flex;
+        }
+
+        .preloader-logo {
+            display: flex;
+            align-items: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .preloader-logo i {
+            color: var(--accent);
+            margin-right: 15px;
+        }
+
+        .loader {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        .loader::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            animation: loading 2s ease-in-out forwards;
+        }
+
+        @keyframes loading {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Redirect Message */
+        #redirect-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #redirect-message h1 {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        #redirect-message p {
+            font-size: 1.2rem;
+        }
+
+        #redirect-message a {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            animation: slideDown 0.8s ease-out 1.5s forwards;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .nav-links li:nth-child(1) { animation-delay: 1.8s; }
+        .nav-links li:nth-child(2) { animation-delay: 2.0s; }
+        .nav-links li:nth-child(3) { animation-delay: 2.2s; }
+        .nav-links li:nth-child(4) { animation-delay: 2.4s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--light);
+            padding: 12px 25px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 77, 0, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 77, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 4px 15px rgba(0, 204, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #00b8e6;
+            box-shadow: 0 6px 20px rgba(0, 204, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 200px 0 150px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,77,0,0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: pulse 15s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(25%, 25%); 
+            }
+            100% {
+                transform: translate(-25%, -25%);
+            }
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--accent);
+            animation: 
+                typing 3.5s steps(40, end) 0.5s forwards,
+                blink-caret 0.75s step-end infinite;
+            width: 0;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent) }
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--gray);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            color: var(--light);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 5px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+        .feature-card:nth-child(4) { animation-delay: 0.8s; }
+        .feature-card:nth-child(5) { animation-delay: 1.0s; }
+        .feature-card:nth-child(6) { animation-delay: 1.2s; }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--accent), var(--secondary));
+            transition: height 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 1.4s forwards;
+        }
+
+        .status-badge iframe {
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Projects */
+        .projects {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .projects::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9));
+            z-index: -1;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.3s; }
+        .project-card:nth-child(2) { animation-delay: 0.6s; }
+        .project-card:nth-child(3) { animation-delay: 0.9s; }
+        .project-card:nth-child(4) { animation-delay: 1.2s; }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,77,0,0.7), rgba(0,204,255,0.7));
+            opacity: 0.7;
+        }
+
+        .project-image i {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-content h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,77,0,0.2), rgba(0,204,255,0.2));
+            z-index: -1;
+        }
+
+        .cta h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 20px;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 18px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: 'ASTRACAT';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            color: var(--light);
+            text-shadow: 0 0 5px var(--secondary);
+        }
+
+        .glitch::before {
+            animation: glitch-effect 3s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .glitch::after {
+            animation: glitch-effect 2s infinite linear alternate-reverse;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-effect {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-3px, 3px);
+            }
+            40% {
+                transform: translate(-3px, -3px);
+            }
+            60% {
+                transform: translate(3px, 3px);
+            }
+            80% {
+                transform: translate(3px, -3px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 15px;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .cta h2 {
+                font-size: 36px;
+            }
+
+            .status-badge iframe {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Резервный контент если JavaScript отключен -->
-  <noscript>
-    <div class="browser-warning">
-      <h1>⚠️ Требуется JavaScript</h1>
-      <p>Пожалуйста, включите JavaScript для продолжения</p>
+    <!-- Сообщение для GitHub Pages, если редирект не сработал -->
+    <div id="redirect-message" style="display: none;">
+        <h1>Перенаправление...</h1>
+        <p>Вы перенаправляетесь на новый сайт. Если это не произошло, <a href="https://astracat.vercel.app">нажмите здесь</a>.</p>
     </div>
-  </noscript>
+
+    <!-- Auth Container with Cloudflare Turnstile -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box">
+            <div class="scan-line"></div>
+            <h1 class="auth-title">THE ASTRACAT</h1>
+            <p class="auth-subtitle">Выполняется проверка на бота</p>
+            
+            <!-- Cloudflare Turnstile -->
+            <div class="cf-turnstile" 
+                 data-sitekey="0x4AAAAAABLgaFLEZGcqAM3Q" 
+                 data-callback="onCaptchaSuccess" 
+                 data-theme="dark" 
+                 data-language="ru"></div>
+        </div>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <i class="fas fa-paw"></i>
+            <span>ASTRACAT</span>
+        </div>
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-paw"></i>
+                    <span class="glitch">ASTRACAT</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Возможности</a></li>
+                    <li><a href="#projects">Проекты</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                    <li><a href="https://astracat.vercel.app/dns" class="btn">DNS</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><span>ASTRACAT</span> — БРУТАЛЬНАЯ БЕЗОПАСНОСТЬ</h1>
+            <p>Элитные решения для защиты вашей цифровой жизни. Технологии нового поколения для тех, кто ценит анонимность и скорость.</p>
+            <div class="hero-buttons">
+                <a href="https://astracat.vercel.app/vpngen/" class="btn">VPN ГЕНЕРАТОР</a>
+                <a href="https://astracat.vercel.app/dns" class="btn btn-secondary">ASTRACAT DNS</a>
+                <a href="https://astracat.vercel.app/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши преимущества</h2>
+                <p>Мы предлагаем эксклюзивные решения для тех, кто не приемлет компромиссов</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Абсолютная защита</h3>
+                    <p>Многоуровневая система безопасности, защищающая от всех видов киберугроз.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Максимальная скорость</h3>
+                    <p>Оптимизированные серверы по всему миру обеспечивают молниеносное соединение.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>Полная анонимность</h3>
+                    <p>Никаких логов, никакого отслеживания — ваша приватность под надежной защитой.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3>Без рекламы</h3>
+                    <p>Чистый интернет без навязчивой рекламы и трекеров.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Доступ к контенту</h3>
+                    <p>Обход любых блокировок и географических ограничений.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Наша команда всегда готова помочь с любыми вопросами.</p>
+                </div>
+                
+                <!-- Status Badge -->
+                <div class="status-badge">
+                    <iframe src="https://astracat-inc.betteruptime.com/badge?theme=dark" width="250" height="30" frameborder="0" scrolling="no" style="color-scheme: normal"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Наши проекты</h2>
+                <p>Эксклюзивные решения для профессионалов</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>ASTRACAT DNS</h3>
+                        <p>Продвинутый DNS-сервис с защитой от угроз, рекламы и трекеров. Обход блокировок и ускорение интернета.</p>
+                        <a href="https://astracat.vercel.app/dns" class="btn">ПОДРОБНЕЕ</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>VPN GEn</h3>
+                        <p>Мощный генератор Veles-конфигов с уникальными возможностями настройки и амнистией прокси.</p>
+                        <a href="https://astracat.vercel.app/vpngen/" class="btn">ПОДРОБНЕЕ</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>WARP Generator</h3>
+                        <p>Генератор конфигураций Cloudflare WARP для максимальной скорости и безопасности соединения.</p>
+                        <a href="https://astracat.vercel.app/warp" class="btn">ПОДРОБНЕЕ</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>GitHub Репозитории</h3>
+                        <p>Все наши открытые проекты и исходный код доступны на GitHub.</p>
+                        <a href="https://github.com/ASTRACAT2022" class="btn">ПЕРЕЙТИ НА GITHUB</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>ГОТОВЫ К НОВОМУ УРОВНЮ БЕЗОПАСНОСТИ?</h2>
+            <p>Присоединяйтесь к ASTRACAT и получите эксклюзивный доступ к лучшим технологиям защиты</p>
+            <div class="hero-buttons">
+                <a href="https://astracat.vercel.app/vpngen/" class="btn">НАЧАТЬ С VPN</a>
+                <a href="https://astracat.vercel.app/dns" class="btn btn-secondary">НАСТРОИТЬ DNS</a>
+                <a href="https://astracat.vercel.app/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ASTRACAT</h3>
+                    <p>Элитные решения для цифровой безопасности и анонимности.</p>
+                    <div class="social-links">
+                        <a href="https://t.me/astracatui" title="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://github.com/ASTRACAT2022" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="/cdn-cgi/l/email-protection#0d6c7e797f6c6e6c793f3d3c344d6a606c6461236e6260" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Проекты</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://astracat.vercel.app/dns">ASTRACAT DNS</a></li>
+                        <li><a href="https://astracat.vercel.app/vpngen/">VPN GEn</a></li>
+                        <li><a href="https://astracat.vercel.app/warp">WARP Generator</a></li>
+                        <li><a href="https://github.com/ASTRACAT2022">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Документация</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="/cdn-cgi/l/email-protection#a0c1d3d4d2c1c3c1d492909199e0c7cdc1c9cc8ec3cfcd"><span class="__cf_email__" data-cfemail="b19082858390929085c3c1c0c8b1969c90989ddf929e9c">[email protected]</span></a></li>
+                        <li><a href="https://t.me/astracatui">Telegram: @astracatui</a></li>
+                        <li><a href="https://github.com/ASTRACAT2022">GitHub: ASTRACAT2022</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ASTRACAT. Все права защищены. <a href="https://github.com/ASTRACAT2022" style="color: var(--secondary); text-decoration: none;">GitHub</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        
+        ym(100530848, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/100530848" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Показать сообщение о редиректе и скрыть контент для GitHub Pages
+        if (window.location.hostname.includes('github.io')) {
+            document.getElementById('redirect-message').style.display = 'block';
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('preloader').style.display = 'none';
+            document.querySelector('header').style.display = 'none';
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.features').style.display = 'none';
+            document.querySelector('.projects').style.display = 'none';
+            document.querySelector('.cta').style.display = 'none';
+            document.querySelector('footer').style.display = 'none';
+        }
+
+        // Обработка успешной проверки капчи
+        function onCaptchaSuccess(token) {
+            console.log('CAPTCHA Success, token:', token);
+            try {
+                // Скрываем окно авторизации
+                const authContainer = document.getElementById('authContainer');
+                authContainer.style.opacity = '0';
+                authContainer.style.pointerEvents = 'none';
+                
+                // Показываем прелоадер
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('active');
+                
+                // Инициализация Vercel Web Analytics
+                if (typeof window.VercelAnalytics !== 'undefined') {
+                    window.VercelAnalytics.inject();
+                    console.log('Vercel Web Analytics initialized');
+                } else {
+                    console.error('Vercel Analytics script not loaded');
+                }
+                
+                // Инициализация Statsig
+                if (typeof statsig !== 'undefined') {
+                    statsig.initializeQuickstart(
+                        'client-Q61ueM0cqTmrY4ERWsq9q9t6U6qYTP32nzGQDF0iWWe',
+                        { userID: 'anonymous_user_' + Math.random().toString(36).substring(2) } // Генерация случайного userID
+                    ).then(() => {
+                        console.log('Statsig initialized');
+                        
+                        // Проверка эксперимента
+                        const experiment = statsig.getExperiment('statsig-YPHQ0eLdYiozqDsSHzgCK');
+                        console.log('Experiment statsig-YPHQ0eLdYiozqDsSHzgCK:', experiment);
+
+                        // Загрузка конфигурации из Vercel Edge Config
+                        fetch('https://edge-config.vercel.com/ecfg_aghoimbv5yteljcccpz3mmvqa3du?token=31d549d9-2881-4c84-a42b-4c6ab0ecbff3')
+                            .then(response => response.json())
+                            .then(data => {
+                                const config = data['statsig-YPHQ0eLdYiozqDsSHzgCK'];
+                                console.log('Vercel Edge Config for statsig-YPHQ0eLdYiozqDsSHzgCK:', config);
+                                // Здесь можно использовать config для настройки UI, напиши, если нужно
+                            })
+                            .catch(error => {
+                                console.error('Error fetching Vercel Edge Config:', error);
+                            });
+                    }).catch(error => {
+                        console.error('Statsig initialization failed:', error);
+                    });
+                } else {
+                    console.error('Statsig SDK not loaded');
+                }
+                
+                // Имитация загрузки
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.classList.remove('active');
+                    // Показ основного контента
+                    document.body.style.overflow = 'auto';
+                }, 2500);
+            } catch (error) {
+                console.error('Error during CAPTCHA success handling:', error);
+            }
+        }
+    </script>
 </body>
 </html>
