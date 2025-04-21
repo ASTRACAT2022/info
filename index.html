@@ -8,20 +8,6 @@
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     
-    <!-- Перенаправление через мета-тег для GitHub Pages -->
-    <script>
-        if (window.location.hostname.includes('github.io')) {
-            document.write('<meta http-equiv="refresh" content="0;url=https://astracat.vercel.app">');
-        }
-    </script>
-    
-    <!-- Перенаправление через JavaScript для GitHub Pages -->
-    <script>
-        if (window.location.hostname.includes('github.io')) {
-            window.location.replace('https://astracat.vercel.app');
-        }
-    </script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -210,26 +196,6 @@
         @keyframes loading {
             0% { width: 0; }
             100% { width: 100%; }
-        }
-
-        /* Redirect Message */
-        #redirect-message {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        #redirect-message h1 {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-
-        #redirect-message p {
-            font-size: 1.2rem;
-        }
-
-        #redirect-message a {
-            color: var(--secondary);
-            text-decoration: underline;
         }
 
         /* Container */
@@ -902,12 +868,6 @@
     </style>
 </head>
 <body>
-    <!-- Сообщение для GitHub Pages, если редирект не сработал -->
-    <div id="redirect-message" style="display: none;">
-        <h1>Перенаправление...</h1>
-        <p>Вы перенаправляетесь на новый сайт. Если это не произошло, <a href="https://astracat.vercel.app">нажмите здесь</a>.</p>
-    </div>
-
     <!-- Auth Container with Cloudflare Turnstile -->
     <div class="auth-container" id="authContainer">
         <div class="auth-box">
@@ -945,7 +905,7 @@
                     <li><a href="#features">Возможности</a></li>
                     <li><a href="#projects">Проекты</a></li>
                     <li><a href="#contacts">Контакты</a></li>
-                    <li><a href="https://astracat.vercel.app/dns" class="btn">DNS</a></li>
+                    <li><a href="https://astracat2022.github.io/dns" class="btn">DNS</a></li>
                 </ul>
             </nav>
         </div>
@@ -957,9 +917,9 @@
             <h1><span>ASTRACAT</span> — БРУТАЛЬНАЯ БЕЗОПАСНОСТЬ</h1>
             <p>Элитные решения для защиты вашей цифровой жизни. Технологии нового поколения для тех, кто ценит анонимность и скорость.</p>
             <div class="hero-buttons">
-                <a href="https://astracat.vercel.app/vpngen/" class="btn">VPN ГЕНЕРАТОР</a>
-                <a href="https://astracat.vercel.app/dns" class="btn btn-secondary">ASTRACAT DNS</a>
-                <a href="https://astracat.vercel.app/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
+                <a href="https://astracat2022.github.io/vpngen/" class="btn">VPN ГЕНЕРАТОР</a>
+                <a href="https://astracat2022.github.io/dns" class="btn btn-secondary">ASTRACAT DNS</a>
+                <a href="https://astracat2022.github.io/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
             </div>
         </div>
     </section>
@@ -1038,7 +998,7 @@
                     <div class="project-content">
                         <h3>ASTRACAT DNS</h3>
                         <p>Продвинутый DNS-сервис с защитой от угроз, рекламы и трекеров. Обход блокировок и ускорение интернета.</p>
-                        <a href="https://astracat.vercel.app/dns" class="btn">ПОДРОБНЕЕ</a>
+                        <a href="https://astracat2022.github.io/dns" class="btn">ПОДРОБНЕЕ</a>
                     </div>
                 </div>
                 <div class="project-card">
@@ -1048,7 +1008,7 @@
                     <div class="project-content">
                         <h3>VPN GEn</h3>
                         <p>Мощный генератор Veles-конфигов с уникальными возможностями настройки и амнистией прокси.</p>
-                        <a href="https://astracat.vercel.app/vpngen/" class="btn">ПОДРОБНЕЕ</a>
+                        <a href="https://astracat2022.github.io/vpngen/" class="btn">ПОДРОБНЕЕ</a>
                     </div>
                 </div>
                 <div class="project-card">
@@ -1058,7 +1018,7 @@
                     <div class="project-content">
                         <h3>WARP Generator</h3>
                         <p>Генератор конфигураций Cloudflare WARP для максимальной скорости и безопасности соединения.</p>
-                        <a href="https://astracat.vercel.app/warp" class="btn">ПОДРОБНЕЕ</a>
+                        <a href="https://astracat2022.github.io/warp" class="btn">ПОДРОБНЕЕ</a>
                     </div>
                 </div>
                 <div class="project-card">
@@ -1081,9 +1041,9 @@
             <h2>ГОТОВЫ К НОВОМУ УРОВНЮ БЕЗОПАСНОСТИ?</h2>
             <p>Присоединяйтесь к ASTRACAT и получите эксклюзивный доступ к лучшим технологиям защиты</p>
             <div class="hero-buttons">
-                <a href="https://astracat.vercel.app/vpngen/" class="btn">НАЧАТЬ С VPN</a>
-                <a href="https://astracat.vercel.app/dns" class="btn btn-secondary">НАСТРОИТЬ DNS</a>
-                <a href="https://astracat.vercel.app/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
+                <a href="https://astracat2022.github.io/vpngen/" class="btn">НАЧАТЬ С VPN</a>
+                <a href="https://astracat2022.github.io/dns" class="btn btn-secondary">НАСТРОИТЬ DNS</a>
+                <a href="https://astracat2022.github.io/warp" class="btn btn-outline">WARP ГЕНЕРАТОР</a>
             </div>
         </div>
     </section>
@@ -1104,9 +1064,9 @@
                 <div class="footer-column">
                     <h3>Проекты</h3>
                     <ul class="footer-links">
-                        <li><a href="https://astracat.vercel.app/dns">ASTRACAT DNS</a></li>
-                        <li><a href="https://astracat.vercel.app/vpngen/">VPN GEn</a></li>
-                        <li><a href="https://astracat.vercel.app/warp">WARP Generator</a></li>
+                        <li><a href="https://astracat2022.github.io/dns">ASTRACAT DNS</a></li>
+                        <li><a href="https://astracat2022.github.io/vpngen/">VPN GEn</a></li>
+                        <li><a href="https://astracat2022.github.io/warp">WARP Generator</a></li>
                         <li><a href="https://github.com/ASTRACAT2022">GitHub</a></li>
                     </ul>
                 </div>
@@ -1153,19 +1113,6 @@
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        // Показать сообщение о редиректе и скрыть контент для GitHub Pages
-        if (window.location.hostname.includes('github.io')) {
-            document.getElementById('redirect-message').style.display = 'block';
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('preloader').style.display = 'none';
-            document.querySelector('header').style.display = 'none';
-            document.querySelector('.hero').style.display = 'none';
-            document.querySelector('.features').style.display = 'none';
-            document.querySelector('.projects').style.display = 'none';
-            document.querySelector('.cta').style.display = 'none';
-            document.querySelector('footer').style.display = 'none';
-        }
-
         // Обработка успешной проверки капчи
         function onCaptchaSuccess(token) {
             console.log('CAPTCHA Success, token:', token);
