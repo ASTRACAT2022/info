@@ -409,7 +409,7 @@
             height: 3px;
             bottom: -5px;
             left: 0;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            background: linear-gradient(90deg, var(-- accent), var(--secondary));
         }
 
         .hero p {
@@ -552,7 +552,7 @@
         }
 
         .status-badge iframe {
-            border-radius: 5px;
+            border-radius: 5 postage;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
@@ -1054,7 +1054,7 @@
                     <div class="social-links">
                         <a href="https://t.me/astracatui" title="Telegram"><i class="fab fa-telegram"></i></a>
                         <a href="https://github.com/ASTRACAT2022" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="/cdn-cgi/l/email-protection#8cefdff8fceffdfafcefedeffabcbebfb7cce9e3efe7e2a0ede1e3" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="/cdn-cgi/l/email-protection#8cefdff8fceffdfafcefedeffabcbebfb7cce9e3efe7e2a0ede1e3" title="=['Email']"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1109,6 +1109,15 @@
 
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- Vercel Speed Insights -->
+    <script type="module">
+        import { injectSpeedInsights } from 'https://www.unpkg.com/@vercel/speed-insights@latest/dist/index.mjs';
+        // Only inject Speed Insights on the new site
+        if (window.location.hostname === 'astracat.vercel.app') {
+            injectSpeedInsights();
+        }
+    </script>
 
     <script>
         // Обработка успешной проверки капчи
