@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Redirect from old site to new site
+        if (window.location.hostname === 'astracat2022.github.io') {
+            window.location.replace('https://astracat.vercel.app');
+        }
+    </script>
     <style>
         :root {
             --primary: #1a1a1a;
@@ -527,7 +533,8 @@
         .feature-card h3 {
             font-size: 24px;
             margin-bottom: 15px;
-            color: var(--light); }
+            color: var(--light);
+        }
 
         .feature-card p {
             color: var(--gray);
@@ -1028,7 +1035,7 @@
     <section class="cta">
         <div class="container">
             <h2>ГОТОВЫ К НОВОМУ УРОВНЮ БЕЗОПАСНОСТИ?</h2>
-            <p>Присоединяйтесь к ASTRACAT и получите эксклюзивный доступ к лучшим технологиям защиты</p>
+            <p>Присоединяйтесь к ASTRACAT и получите эксклюзивный доступ к лучшим технологи`(доступ к технологиям защиты)</p>
             <div class="hero-buttons">
                 <a href="https://astracat2022.github.io/vpngen/" class="btn">НАЧАТЬ С VPN</a>
                 <a href="https://astracat2022.github.io/dns" class="btn btn-secondary">НАСТРОИТЬ DNS</a>
@@ -1047,7 +1054,7 @@
                     <div class="social-links">
                         <a href="https://t.me/astracatui" title="Telegram"><i class="fab fa-telegram"></i></a>
                         <a href="https://github.com/ASTRACAT2022" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="mailto:astracat2019@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="/cdn-cgi/l/email-protection#8cefdff8fceffdfafcefedeffabcbebfb7cce9e3efe7e2a0ede1e3" title="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -1070,7 +1077,7 @@
                 <div class="footer-column">
                     <h3>Контакты</h3>
                     <ul class="footer-links">
-                        <li><a href="mailto:astracat2019@gmail.com">astracat2019@gmail.com</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#3150424543505250450301000871565c50585d1f525e5c"><span class="__cf_email__" data-cfemail="eacbd9ded8cbc9cbde989a9b93eacdc7cbc3c684c9c5c7">[email&#160;protected]</span></a></li>
                         <li><a href="https://t.me/astracatui">Telegram: @astracatui</a></li>
                         <li><a href="https://github.com/ASTRACAT2022">GitHub: ASTRACAT2022</a></li>
                     </ul>
@@ -1083,7 +1090,7 @@
     </footer>
 
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" >
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -1102,6 +1109,24 @@
 
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- Vercel Speed Insights -->
+    <script type="module">
+        import { injectSpeedInsights } from 'https://www.unpkg.com/@vercel/speed-insights@latest/dist/index.mjs';
+        // Only inject Speed Insights on the new site
+        if (window.location.hostname === 'astracat.vercel.app') {
+            injectSpeedInsights();
+        }
+    </script>
+
+    <!-- Vercel Analytics -->
+    <script type="module">
+        import { inject } from 'https://www.unpkg.com/@vercel/analytics@latest/dist/index.mjs';
+        // Only inject Analytics on the new site
+        if (window.location.hostname === 'astracat.vercel.app') {
+            inject();
+        }
+    </script>
 
     <script>
         // Обработка успешной проверки капчи
@@ -1135,5 +1160,5 @@
             });
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'933e93626dc4dd19',t:'MTc0NTI1NjI3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
